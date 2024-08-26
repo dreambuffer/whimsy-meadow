@@ -1,0 +1,842 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"
+    />
+
+    <title>Whimsy Meadow</title>
+  </head>
+  <style>
+    body {
+      overflow: hidden;
+      margin: 0;
+      top: 35px;
+    }
+
+    #title {
+      position: absolute;
+      top: 10px;
+      width: 100%;
+      text-align: center;
+      z-index: 100;
+      display: block;
+      font-size: 64px;
+      font-family: Verdana, Geneva, Tahoma, sans-serif;
+      font-style: italic, oblique;
+      color: white;
+    }
+    #playButton {
+      position: absolute;
+      top: 30px;
+      width: 25%;
+      text-align: center;
+      z-index: 100;
+      display: block;
+      font-size: 24px;
+      font-family: Verdana, Geneva, Tahoma, sans-serif;
+      font-style: italic, oblique;
+      color: white;
+    }
+
+    #login {
+      padding: 10px 20px;
+      cursor: pointer;
+      background-color: #ffffff;
+      color: #000;
+      border: none;
+      border-radius: 15px;
+      position: absolute;
+      top: 30px;
+      width: 25%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+      z-index: 100;
+      display: block;
+      font-size: 64px;
+      font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+        "Lucida Sans", Arial, sans-serif;
+      font-style: italic, oblique;
+    }
+
+    #login:hover {
+      background-color: #ff80b9;
+    }
+
+    input {
+      padding: 10px 20px;
+      cursor: pointer;
+      background-color: #ffffff;
+      color: #000;
+      border: none;
+      border-radius: 15px;
+      position: absolute;
+      top: 30px;
+      width: 25%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+      z-index: 100;
+      display: block;
+      font-size: 24px;
+      font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+        "Lucida Sans", Arial, sans-serif;
+      font-style: italic, oblique;
+
+    }
+
+    #usernameInput
+
+    #start {
+      padding: 10px 20px;
+      cursor: pointer;
+      background-color: #ffffff;
+      color: #000;
+      border: none;
+      border-radius: 15px;
+      position: relative;
+      top: 30px;
+      left: 50%;
+      text-align: center;
+      z-index: 100;
+      display: block;
+      font-size: 24px;
+      font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+        "Lucida Sans", Arial, sans-serif;
+      font-style: italic, oblique;
+    }
+
+    #gps {
+      padding: 10px 20px;
+      cursor: pointer;
+      color: #000;
+      border: none;
+      position: absolute;
+      top: 120px;
+      right: 264px;
+      width: 50%;
+      text-align: center;
+      z-index: 100;
+      display: block;
+      font-size: 18px;
+      font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+        "Lucida Sans", Arial, sans-serif;
+      font-style: italic, oblique;
+    }
+    #login {
+      padding: 10px 20px;
+      cursor: pointer;
+      background-color: #ffffff;
+      color: #000;
+      border: none;
+      border-radius: 15px;
+      position: absolute;
+      top: 50%;
+      left: 25%;
+      text-align: center;
+      z-index: 100;
+      display: block;
+      font-size: 64px;
+      font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+        "Lucida Sans", Arial, sans-serif;
+      font-style: italic, oblique;
+      visibility: hidden;
+    }
+    .grid-overlay {
+      display: none; /* Initially hidden */
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(64px, 1fr));
+      gap: 4px;
+      max-width: 640px;
+      border: 2px solid  #64f7d2;
+      border-radius: 12px;
+      background-color: white;
+      padding: 12px;
+    }
+    .grid-item {
+      width: 64px;
+      height: 64px;
+      overflow: hidden;
+      background-color: #64f7d2;
+      border-radius: 24px;
+    }
+    .grid-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      max-width: 400px; /* Adjust width as needed */
+      margin: 20px auto;
+      top: 64px;
+      position: absolute;
+      border-radius: 12px;
+
+    }
+    tr{
+      font-family:'Courier New', Courier, monospace;
+    }
+    td {
+      padding: 4px;
+      text-align: left;
+      color: black;
+      background-color: #ffffff;
+    }
+    th {
+      color: rgb(5, 5, 5);
+    }
+    #points{
+      color: red;
+    }
+
+      
+  </style>
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://unpkg.com/three@0.136.0/build/three.module.js",
+        "three/addons/": "https://unpkg.com/three@0.136.0/examples/jsm/"
+      }
+    }
+  </script>
+
+  <body>
+    <!--<div id="title">Kaizomorph Racing</div>-->
+    <!--<p id="gps">0,0,0</p>-->
+    <script src="https://cdn.jsdelivr.net/npm/msgpack-lite/dist/msgpack.min.js"></script>
+
+    <table>
+      <tr>
+        <th>Name</th>
+        <th>Points</th>
+      </tr>
+      <tr>
+        <td>Player 1</td>
+        <td id="points">100</td>
+      </tr>
+      <tr>
+        <td>Player 2</td>
+        <td id="points">100</td>
+      </tr>
+      <tr>
+        <td>Player 3</td>
+        <td id="points">10</td>
+      </tr>
+
+    </table>
+  
+    <div  class="grid-overlay" id="imageGrid">
+      <div class="grid-item"><img src="client/data/sprites/kimiku.png" alt="Image 1"></div>
+      <div class="grid-item"><img src="client/data/sprites/kimiku.png" alt="Image 1"></div>
+      <div class="grid-item"><img src="client/data/sprites/kimiku.png" alt="Image 1"></div>
+      <div class="grid-item"><img src="client/data/sprites/kimiku.png" alt="Image 1"></div>
+      <div class="grid-item"><img src="client/data/sprites/kimiku.png" alt="Image 1"></div>
+      <div class="grid-item"><img src="client/data/sprites/kimiku.png" alt="Image 1"></div>
+      <div class="grid-item"><img src="client/data/sprites/kimiku.png" alt="Image 1"></div>
+      <div class="grid-item"><img src="client/data/sprites/kimiku.png" alt="Image 1"></div>
+      <div class="grid-item"><img src="client/data/sprites/kimiku.png" alt="Image 1"></div>
+      <div class="grid-item"><img src="client/data/sprites/kimiku.png" alt="Image 1"></div>
+      <div class="grid-item"><img src="client/data/sprites/kimiku.png" alt="Image 1"></div>
+      <div class="grid-item"><img src="client/data/sprites/kimiku.png" alt="Image 1"></div>
+      <div class="grid-item"><img src="client/data/sprites/kimiku.png" alt="Image 1"></div>
+      <div class="grid-item"><img src="client/data/sprites/kimiku.png" alt="Image 1"></div>
+      <div class="grid-item"><img src="client/data/sprites/kimiku.png" alt="Image 1"></div>
+      <div class="grid-item"><img src="client/data/sprites/kimiku.png" alt="Image 1"></div>
+
+      <!-- Add more grid items as needed -->
+    </div>
+    
+    <script type="module">
+      // TODO:
+      // make a list of constants from common values
+      // separate code into functions
+      // group related code together
+      // separate related code into files (export const)
+      // E-> bring up grid of found morphs
+      // Esc-> bring up settings and quit
+      // Add second floor around perimeter, teleport up + shift
+
+      import * as THREE from "three";
+      import { ParametricGeometry } from "https://cdn.skypack.dev/three@0.136.0/examples/jsm/geometries/ParametricGeometry";
+      import { ParametricGeometries } from "https://cdn.skypack.dev/three@0.136.0/examples/jsm/geometries/ParametricGeometries";
+      // import { OBJLoader } from "https://unpkg.com/three@0.136.0/examples/jsm/loaders/OBJLoader.js"
+      //import { MTLLoader } from "https://unpkg.com/three@0.136.0/examples/jsm/loaders/MTLLoader.js"
+      import { MTLLoader } from "three/addons/loaders/MTLLoader.js";
+      import { OBJLoader } from "three/addons/loaders/OBJLoader.js";
+      import { createGrassPlane, createTorus, addToruses,createFlower, changePetalColor, addFlowers } from '/client/meshes.js';
+
+      
+      const element = document.body;
+
+      element.requestPointerLock =
+        element.requestPointerLock ||
+        element.mozRequestPointerLock ||
+        element.webkitRequestPointerLock;
+      document.exitPointerLock =
+        document.exitPointerLock ||
+        document.mozExitPointerLock ||
+        document.webkitExitPointerLock;
+
+      element.addEventListener("click", () => {
+        element.requestPointerLock();
+      });
+
+      // Listen for the pointer lock change event
+      document.addEventListener(
+        "pointerlockchange",
+        onPointerLockChange,
+        false,
+      );
+      document.addEventListener(
+        "mozpointerlockchange",
+        onPointerLockChange,
+        false,
+      );
+      document.addEventListener(
+        "webkitpointerlockchange",
+        onPointerLockChange,
+        false,
+      );
+
+
+      
+
+      function onPointerLockChange() {
+        if (
+          document.pointerLockElement === element ||
+          document.mozPointerLockElement === element ||
+          document.webkitPointerLockElement === element
+        ) {
+          // Pointer is locked, hide the mouse
+          document.body.style.cursor = "none";
+        } else {
+          // Pointer is unlocked, show the mouse
+          document.body.style.cursor = "auto";
+        }
+      }
+
+      const scene = new THREE.Scene();
+      const camera = new THREE.PerspectiveCamera(
+        10,
+        window.innerWidth / window.innerHeight,
+        0.9,
+        4000,
+      );
+      const renderer = new THREE.WebGLRenderer({
+        antialias: true,
+        alpha: true,
+      });
+      renderer.shadowMap.enabled = true;
+      renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+      //renderer.setPixelRatio(1);
+
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      document.body.appendChild(renderer.domElement);
+
+      //  const menu = document.getElementById("menu");
+
+
+
+      var typing = true;
+      var worldcenter = new THREE.Vector3(0, 0, 0);
+      const morphMap = new Map();
+      const clientMap = new Map();
+
+     
+
+      var login = true;
+      ///////////////
+      // login
+      document
+        .getElementById("login")
+        .addEventListener("click", function () {});
+
+  
+      var ambientLight = new THREE.AmbientLight(0x404040, 3); // Adjust the color as needed
+      scene.add(ambientLight);
+      scene.background = new THREE.Color(0x8791ff); // Blue color
+
+      const shadowGeometry = new THREE.CircleGeometry(16, 32);
+      const shadowMaterial = new THREE.MeshBasicMaterial({
+        color: 0x000000,
+        opacity: 1,
+        transparent: false,
+      });
+
+      const shadow = new THREE.Mesh(shadowGeometry, shadowMaterial);
+      shadow.rotation.x = -Math.PI / 2; // Make it lie flat on the ground
+      scene.add(shadow);
+
+      createGrassPlane(scene);
+      addFlowers(scene)
+      
+      const toruses = [];
+      for (let i = 0; i < 10; i++) {
+        const torus = createTorus(
+          16,
+          1.5,
+          0x2688ff,
+          new THREE.Vector3(
+            Math.random() * 4 - 2,
+            16 + i * 8,
+            Math.random() * 4 - 2,
+          ),
+        );
+        torus.rotation.x = -Math.PI / 2;
+        torus.visible = false;
+
+        scene.add(torus);
+        toruses.push(torus);
+      }
+      const spriteTexture = new THREE.TextureLoader().load("client/ufo.png");
+      const material = new THREE.SpriteMaterial({
+        map: spriteTexture,
+        side: THREE.DoubleSide,
+      });
+      spriteTexture.generateMipmaps = false;
+      spriteTexture.minFilter = THREE.NearestFilter;
+      spriteTexture.magFilter = THREE.NearestFilter;
+      const sprite = new THREE.Sprite(material);
+      sprite.scale.set(6, 6, 1);
+      scene.add(sprite);
+      camera.position.set(
+        sprite.position.x,
+        sprite.position.y + 18,
+        sprite.position.z - 259,
+      );
+      sprite.add(camera);
+      camera.lookAt(
+        new THREE.Vector3(sprite.position.x, sprite.position.y - 4, 1056),
+      );
+      var gps = document.getElementById("gps");
+      const playButton = document.getElementById("playButton")
+
+      //document.getElementById("playButton")
+      ///////////////
+      // create game
+      if (login) {
+        playButton.hidden =true;
+        playButton.addEventListener("click", function () {
+          typing = false;
+          const socket = new WebSocket("ws://localhost:8080/ws"); // WORKS!
+          socket.addEventListener("open", (event) => {
+            console.log("WebSocket connection opened:", event.data);
+            //send an init request to the server for an initial list of morphs before receving any other message
+            socket.send(JSON.stringify({ Type: "init" }));
+
+
+
+          });
+          socket.addEventListener("error", (error) => {
+            console.error("WebSocket error:", error);
+          });
+          socket.addEventListener("close", (event) => {
+            console.log("WebSocket connection closed:", event);
+          });
+
+          var currentMsg = null;
+          socket.addEventListener("message", (event) => {
+            const data = JSON.parse(event.data);
+            console.log("Client data:", data);
+            let lastMsg = currentMsg;
+            currentMsg = data;
+
+            // var point = document.getElementById('points');
+            // leaderboard.set(data["playername"], data["points"])
+            // table.points = leaderboard.get(data["playername"])
+
+            // if type == "morphinit"
+            // for i in data["morphbuffer"]
+            //  set morph map, genMorphSprites(), add to scene. do this as the connection opens. 
+
+            // 
+            // if (data["type"] == "join") {
+              
+            // }
+
+            if (data["type"] == "morph") {
+              const basePath = "client/data/sprites/";
+              const file = data["Kaizomorph"]["Name"];
+              const fullPath = basePath + file + ".png";
+
+              const morphTexture = new THREE.TextureLoader().load(fullPath);
+              const material = new THREE.SpriteMaterial({
+                map: morphTexture,
+              });
+              morphTexture.minFilter = THREE.NearestFilter;
+              morphTexture.magFilter = THREE.NearestFilter;
+              const morph = new THREE.Sprite(material);
+              morph.scale.set(6, 6, 1);
+              let pos = new THREE.Vector3(
+                data["pos"]["X"],
+                data["pos"]["Y"],//          sprite.position.y = Math.sin(1 * clock.getElapsedTime()) * 2;
+                data["pos"]["Z"],
+              );
+              morph.position.copy(pos); // lerp other clients besides player
+
+              morphMap.set(data["UUID"], morph); 
+
+              scene.add(morph);
+            }
+            if (data["type"] == "destroy") {
+              const morph = morphMap.get(data["UUID"]);
+              scene.remove(morph);
+              morphMap.delete(data["UUID"]);
+            }
+            if (data["type"] == "beam") {
+              const storedMorph = morphMap.get(data["UUID"]);
+
+
+              // clientMap beam is true
+              
+              
+              /*
+
+              //ANIMATION 
+              clienttoruses.forEach((torus) => {
+                torus.visible = true;
+                animateTorus(torus);
+              });
+            } else {
+              toruses.forEach((torus) => {
+                torus.visible = false; // Set opacity based on visibility
+              });
+            }
+
+              */
+              if (storedMorph) {
+                let pos = new THREE.Vector3(
+                  data["pos"]["X"],
+                  data["pos"]["Y"],
+                  data["pos"]["Z"],
+                );
+  
+                storedMorph.position.copy(pos);
+
+              }
+            }
+            
+            if (data["Type"] == "player") {
+              console.log("TOT::: ",data["TotalPoints"]);
+              // animate points
+              
+              if (clientMap.size === 0 && !clientMap.has(data["ID"])) {
+                clientMap.set(data["ID"], sprite);
+                var playerID = data["ID"];
+              }
+              if (!clientMap.has(data["ID"])) {
+                const clientTexture = new THREE.TextureLoader().load(
+                  "client/ufo.png",
+                );
+                const material = new THREE.SpriteMaterial({
+                  map: clientTexture,
+                  
+                });
+                
+                clientTexture.minFilter = THREE.NearestFilter;
+                clientTexture.magFilter = THREE.NearestFilter;
+                const newClient = new THREE.Sprite(material);
+                newClient.scale.set(6, 6, 1);
+                scene.add(newClient);
+
+                for (let i = 0; i < 10; i++) {
+                  const torus = createTorus(
+                    16,
+                    1.5,
+                    0x2688ff,
+                    new THREE.Vector3(
+                      Math.random() * 4 - 2,
+                      16 + i * 8,
+                      Math.random() * 4 - 2,
+                    ),
+                  );
+                  torus.rotation.x = -Math.PI / 2;
+                  torus.visible = false;
+          
+                  scene.add(torus);
+                  toruses.push(torus);
+                }
+          
+          
+
+
+                clientMap.set(data["ID"], newClient);
+                console.log("MAP: ", clientMap);
+              }
+
+              if (clientMap.get(data["ID"]) !== sprite) {
+                let client = clientMap.get(data["ID"]);
+                let pos = new THREE.Vector3(
+                  data["Pos"]["X"],
+                  data["Pos"]["Y"],
+                  data["Pos"]["Z"],
+                );
+                client.position.copy(pos); // lerp other clients besides player
+                client.rotation.y = data["RotY"];
+
+                let rad = data["RotY"] % (Math.PI * 2);
+              }
+            }
+
+            // if tick
+            if (data["z"]) {
+            }
+            if (data["x"]) {
+            }
+
+            
+          });
+
+          let position = new THREE.Vector3(0, 108, 0);
+          //position = truncateVec(position, 6);
+
+          let decel = 0.9;
+          const accel = 64;
+          const maximumSpeed = 100;
+          const dampingFactor = 0.2;
+          var clock = new THREE.Clock();
+          const keys = {};
+          window.addEventListener("keydown", (event) => {
+            if (!typing) {
+              event.preventDefault();
+            }
+            if (event.key === 'e') {
+              document.exitPointerLock();
+              var imageGrid = document.getElementById('imageGrid');
+              //imageGrid.classList.toggle('hidden');
+              imageGrid.style.display = (imageGrid.style.display === 'grid') ? 'none' : 'grid';
+
+            }
+    
+            keys[event.code] = true;
+          });
+          window.addEventListener("keyup", (event) => {
+            if (!typing) {
+              event.preventDefault();
+            }
+            keys[event.code] = false;
+          });
+          let velocity = new THREE.Vector3(0, 0, 0);
+          // main loop
+          function animate() {
+            requestAnimationFrame(animate);
+
+            const delta = clock.getDelta();
+
+            //planeMaterial.uniforms.time.value += 0.002;
+
+            let prevpos = new THREE.Vector3().copy(sprite.position);
+            position.addScaledVector(velocity, delta);
+            sprite.position.copy(position);
+
+            if (keys["ArrowUp"] || keys["KeyW"]) {
+              velocity.clampLength(0, maximumSpeed);
+              const angle = sprite.rotation.y;
+              const rotatedForward = new THREE.Vector3(
+                Math.sin(angle) * 8,
+                0,
+                Math.cos(angle) * 8,
+              ); // grip
+              velocity.addScaledVector(rotatedForward, accel * delta); // accel
+              position.addScaledVector(velocity, delta);
+              sprite.position.copy(position);
+            } else {
+              velocity.clampLength(0, maximumSpeed);
+              velocity.multiplyScalar(decel);
+            }
+            if (keys["ArrowDown"]) {
+              //-267
+            }
+            if (keys["ArrowLeft"] || keys["KeyA"]) {
+              sprite.rotation.y += 0.03;
+              velocity.clampLength(0, maximumSpeed);
+            }
+            if (keys["ArrowRight"] || keys["KeyD"]) {
+              sprite.rotation.y -= 0.03;
+              velocity.clampLength(0, maximumSpeed);
+            }
+
+            let x = Math.trunc(sprite.position.x);
+            let z = Math.trunc(sprite.position.z);
+            let gpsString = `${x}, ${z}`;
+            //gps.textContent = gpsString;
+
+            if (sprite.position.x > 1000) {
+              position.x = 1000;
+              velocity.x = -velocity.x;
+            }
+            if (sprite.position.x < -1000) {
+              position.x = -1000;
+              velocity.x = -velocity.x;
+            }
+            if (sprite.position.z > 1000) {
+              position.z = 1000;
+              velocity.z = -velocity.z;
+            }
+            if (sprite.position.z < -1000) {
+              position.z = -1000;
+              velocity.z = -velocity.z;
+            }
+
+            position.addScaledVector(velocity, delta);
+            // sprite.position.y animation
+            
+            sprite.position.copy(position);
+            sprite.position.copy(truncateVec(sprite.position, 6));
+
+            if (keys["Space"]) {
+
+              //ANIMATION 
+              toruses.forEach((torus) => {
+                torus.visible = true;
+                animateTorus(torus);
+              });
+            } else {
+         
+              toruses.forEach((torus) => {
+                torus.visible = false; // Set opacity based on visibility
+              });
+            }
+
+
+            shadow.position.x = sprite.position.x;
+            shadow.position.y = 8.5;
+            shadow.position.z = sprite.position.z;
+
+            const posMsg = {
+              Type: "positional",
+              Pos: {
+                x: 0,
+                y: 0,
+                z: 0,
+              },
+              RotY: sprite.rotation.y, //sprite.rotation.y >= 0 ? % (Math.PI * 2) : sprite.rotation.y % -(Math.PI * 2)
+              // this could be sent under the A and D keys to capture direcvtion of rotation
+              // for now just send the rotation as threejs calculates it.
+              Beam: false,
+              Positional: false,
+            };
+
+            let currpos = new THREE.Vector3().copy(sprite.position);
+
+            //if ((keys['KeyW'] || keys['KeyD']|| keys['KeyA']) || (!prevpos.equals(currpos))) {
+            //socket.send(msgpack.encode(posMsg), {
+            //  binary: true
+            //});
+            //}
+            const beamMsg = {
+              Type: "beam",
+              Beam: true,
+              Key: "Space",
+            };
+
+            if (keys["Space"]) {
+              posMsg.Beam = true;
+            }
+
+            if (
+              keys["KeyW"] ||
+              keys["KeyD"] ||
+              keys["KeyA"] ||
+              !prevpos.equals(currpos)
+            ) {
+              posMsg.Positional = true;
+              posMsg.Pos.x = sprite.position.x;
+              posMsg.Pos.y = sprite.position.y;
+              posMsg.Pos.z = sprite.position.z;
+              posMsg.RotY = sprite.rotation.y;
+            }
+
+            socket.send(msgpack.encode(posMsg), {
+              binary: true,
+            });
+
+            renderer.render(scene, camera);
+          }
+
+          animate();
+        });
+        window.addEventListener("resize", () => {
+          const newWidth = window.innerWidth;
+          const newHeight = window.innerHeight;
+
+          camera.aspect = newWidth / newHeight;
+          camera.updateProjectionMatrix();
+
+          renderer.setSize(newWidth, newHeight);
+        });
+      }
+      function animateTorus(torus) {
+        const speed = 1.5;
+        torus.position.y += speed;
+        torus.position.x = sprite.position.x;
+        torus.position.z = sprite.position.z;
+
+        // You can add custom logic here to control the torus movement
+
+        // Reset the torus position if it reaches a certain height
+        if (torus.position.y > 96) {
+          torus.position.y = 16;
+        }
+      }
+
+      function isBeamed(player, client) {
+        var threshold = 24;
+
+        // Get the positions of the sprites
+        var playerPosition = player.position.clone();
+        var otherPosition = client.position.clone();
+
+        // Set the y-coordinate to the same value for 2D comparison
+        playerPosition.y = 0;
+        otherPosition.y = 0;
+
+        // Calculate the distance between the two sprites
+        var distance = playerPosition.distanceTo(otherPosition);
+
+        // Check if the distance is within the threshold
+        if (distance < threshold) {
+          // The player is within the specified threshold of the other sprite
+          return true;
+        } else {
+          // The player is not within the specified threshold
+          // client.position.lerp(new THREE.Vector3(player.position.x, 16, player.position.y), 0.1);
+        }
+      }
+
+      function truncate(f, d) {
+        let decimals = Math.pow(10, d);
+        f = Math.floor(f * decimals) / decimals;
+        return f;
+      }
+      function truncateVec(v, d) {
+        let x = truncate(v.x, d);
+        let y = truncate(v.y, d);
+        let z = truncate(v.z, d);
+        return new THREE.Vector3(x, y, z);
+      }
+    </script>
+    <button id="playButton">play~</button>
+    <input type="text" id="usernameInput" placeholder="username">
+
+    <form action="/login" method="POST">
+      <input
+        type="text"
+        id="usernameInput"
+        value="user"
+        name="data"
+        placeholder="username"
+      />
+      <button id="login" type="submit">log in</button>
+
+      <!--<button class="round-button" id="reroll" type="submit" onclick="disableButton()">r</button>-->
+    </form>
+  </body>
+</html>

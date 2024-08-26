@@ -1,0 +1,187 @@
+{
+    "moffem": {
+        "hp": 80,
+        "atk": 60,
+        "pdef": 90,
+        "spa": 110,
+        "spdef": 50,
+        "spe": 110,
+        "ability": "Intimidate",
+        "type": [
+            "Bug",
+            "Dark"
+        ],
+        "group": ""
+    },
+    "berub": {
+        "hp": 60,
+        "atk": 70,
+        "pdef": 80,
+        "spa": 160,
+        "spdef": 60,
+        "spe": 70,
+        "ability": "Intimidate",
+        "type": [
+            "Bug",
+            "Animal"
+        ],
+        "group": ""
+    },
+    "gargrowl": {
+        "hp": 60,
+        "atk": 80,
+        "pdef": 80,
+        "spa": 90,
+        "spdef": 120,
+        "spe": 70,
+        "ability": "Intimidate",
+        "type": [
+            "Bug",
+            ""
+        ],
+        "group": ""
+    },
+    "dragnom": {
+        "hp": 80,
+        "atk": 90,
+        "pdef": 110,
+        "spa": 80,
+        "spdef": 60,
+        "spe": 80,
+        "ability": "Prankster",
+        "type": [
+            "Bug",
+            ""
+        ],
+        "group": ""
+    },
+    "celestear": {
+        "hp": 50,
+        "atk": 70,
+        "pdef": 100,
+        "spa": 110,
+        "spdef": 110,
+        "spe": 60,
+        "ability": "Prankster",
+        "type": [
+            "Bug",
+            "Dark"
+        ],
+        "group": ""
+    },
+    "grudopod": {
+        "hp": 130,
+        "atk": 80,
+        "pdef": 60,
+        "spa": 110,
+        "spdef": 50,
+        "spe": 70,
+        "ability": "Prankster",
+        "type": [
+            "Bug",
+            "Monster"
+        ],
+        "group": ""
+    },
+    "hiveila": {
+        "hp": 80,
+        "atk": 90,
+        "pdef": 90,
+        "spa": 50,
+        "spdef": 40,
+        "spe": 150,
+        "ability": "Prankster",
+        "type": [
+            "Bug",
+            ""
+        ],
+        "group": ""
+    },
+    "lamora": {
+        "hp": 60,
+        "atk": 90,
+        "pdef": 90,
+        "spa": 80,
+        "spdef": 110,
+        "spe": 70,
+        "ability": "Intimidate",
+        "type": [
+            "Bug",
+            "Cosmic"
+        ],
+        "group": ""
+    },
+    "bloobattle": {
+        "hp": 170,
+        "atk": 70,
+        "pdef": 30,
+        "spa": 80,
+        "spdef": 70,
+        "spe": 80,
+        "ability": "Intimidate",
+        "type": [
+            "Fungus",
+            ""
+        ],
+        "group": ""
+    },
+    "triseraph": {
+        "hp": 50,
+        "atk": 60,
+        "pdef": 100,
+        "spa": 110,
+        "spdef": 110,
+        "spe": 70,
+        "ability": "Intimidate",
+        "type": [
+            "Fungus",
+            "Dark"
+        ],
+        "group": ""
+    },
+    "sniffen": {
+        "hp": 50,
+        "atk": 60,
+        "pdef": 100,
+        "spa": 110,
+        "spdef": 110,
+        "spe": 70,
+        "ability": "Prankster",
+        "type": [
+            "Fungus",
+            "Dark"
+        ],
+        "group": ""
+    },
+    "sucura": {
+        "hp": 80,
+        "atk": 60,
+        "pdef": 90,
+        "spa": 110,
+        "spdef": 50,
+        "spe": 110,
+        "ability": "Intimidate",
+        "type": [
+            "Plant",
+            ""
+        ],
+        "group": ""
+    },
+    "cao": {
+        "hp": 80,
+        "atk": 60,
+        "pdef": 90,
+        "spa": 110,
+        "spdef": 50,
+        "spe": 110,
+        "ability": "Intimidate",
+        "type": [
+            "Animal",
+            ""
+        ],
+        "group": ""
+    }
+
+
+
+}
